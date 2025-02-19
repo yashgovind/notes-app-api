@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const ejs = require("ejs");
 const authRoute = require("./Routers/AuthRoute");
+const notesRoute = require("./Routers/NoteRoutes");
 app.set("view engine");
 const port = process.env.PORT||4800;
 const mongoPath = process.env.MONGO_URI;
@@ -18,6 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/auth", authRoute); // for authorization
+
+app.use("/notes", notesRoute); // for notes 
 
 
 // root url

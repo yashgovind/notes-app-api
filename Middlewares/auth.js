@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.JWT_SECRET;
 
-
+// flow -->
+// token stored in head --> decode the jwt by verifying it with a secret key -> send to the front-end or user.
 
 function verifyToken(req, res, next) {
     try {
@@ -13,7 +14,9 @@ function verifyToken(req, res, next) {
             return res.stats(401).json("error");
         }
         const decodedToken = jwt.verify(token, secretKey); // get the decoded token
-        req.user = decodedToken; // send token to user . but whats this.
+        req.user = decodedToken; // send the payload....///
+
+        // console.log(req.user); 
         next();
 
     } catch (error) {
@@ -30,4 +33,4 @@ function verifyToken(req, res, next) {
 module.exports = verifyToken;
 
 
-// check if token is present in header , decode the jwt and return the response(attach user data to it)
+// check if token is present in header , decode the jwt, send the payload , return the

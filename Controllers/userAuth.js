@@ -47,7 +47,7 @@ async function loginController(req, res) {
       expiresIn: "1hr",
     });
     //   console.log('token is ', token);
-    // return the token
+    // maybe i need to store in local storage 
     return res.status(200).json({ token });
   } catch (error) {
     console.error(error.message);

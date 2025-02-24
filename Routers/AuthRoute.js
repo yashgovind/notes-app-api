@@ -5,7 +5,7 @@ const { signUpController , loginController} = require("../Controllers/userAuth")
 
 router.post("/signup", signUpController); // path is "/auth/signup"
 
-router.get("/login", loginController); // path is "/auth/login"
+router.post("/login", loginController); // path is "/auth/login"
 
 
 module.exports = router;

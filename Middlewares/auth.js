@@ -5,32 +5,33 @@ const secretKey = process.env.JWT_SECRET;
 // token stored in head --> decode the jwt by verifying it with a secret key -> send to the front-end or user.
 
 function verifyToken(req, res, next) {
-    try {
+  try {
+    const token = req.headers["x-api-token"];
 
-        const token = req.headers("X-API-Token");
-        // get token from headers.
+    // get token from headers.
 
-        if (!token) {
-            return res.stats(401).json("error");
-        }
-        const decodedToken = jwt.verify(token, secretKey); // get the decoded token
-        req.user = decodedToken; // send the payload....///
-
-        // console.log(req.user); 
-        next();
-
-    } catch (error) {
-
-        console.error(error.message);
-        return res.status(500).json("server down");
+    if (!token) {
+      return res.status(401).json("Unauthorized request.");
     }
-    // check if token is present in header.
+    const decodedToken = jwt.verify(token, secretKey); // get the decoded token
+    req.user = decodedToken; // send the payload....///
 
+    next();
+  } catch (error) {
+    console.error(error.name);
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json("Invalid token provided.");
+    }
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json("Token expired.");
+    }
+    return res
+      .status(500)
+      .json("Oops! Something went wrong. Cannot process your request.");
+  }
+  // check if token is present in header.
 }
 
-
-
 module.exports = verifyToken;
-
 
 // check if token is present in header , decode the jwt, send the payload , return the

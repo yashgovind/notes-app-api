@@ -28,26 +28,36 @@ async function signUpController(req, res) {
 
 async function loginController(req, res) {
   try {
-    const { name,email, password } = req.body; // find the user by their email.
-    const user = await model.findOne({ email }); // check if email and password are provided
+    const { email, password } = req.body; // find the user by their email.
+
     if (!email || !password) {
-      res.status(404).json("give username and passsword");
+      return res.status(400).json("Enter valid email and password to login.");
     }
-    if (!user) { // chekc if user exists.
-        return res.status(404).json({ error: "User not found" });
-      }
+
+    const user = await model.findOne({ email }); // check if email and password are provided
+
+    if (!user) {
+      // chekc if user exists.
+      return res.status(400).json("Entered credentials are not valid.");
+    }
 
     const isValidPassword = await bcrypt.compare(password, user.password); // compare the password
+
     if (!isValidPassword) {
-      res.status(404).json(" password is wrong");
+      return res.status(400).json("Entered credentials are not valid.");
     }
 
     // send jwt token
-    const token = jwt.sign({ id: user._id , name,email}, secretKey, {
-      expiresIn: "1hr",
-    });
+    const token = jwt.sign(
+      { id: user._id, name: user.name, email: user.email },
+      secretKey,
+      {
+        expiresIn: "1hr",
+      }
+    );
+
     //   console.log('token is ', token);
-    // maybe i need to store in local storage 
+
     return res.status(200).json({ token });
   } catch (error) {
     console.error(error.message);

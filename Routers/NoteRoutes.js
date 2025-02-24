@@ -1,12 +1,18 @@
-const express = require('express');
+const express = require("express");
+const auth = require("../Middlewares/auth");
 const router = express.Router();
-const { addNotes,getAllNotes, deleteNotesById, deleteAllNotes} = require("../Controllers/Notes");
+const {
+  addNotes,
+  getAllNotes,
+  deleteNotesById,
+  deleteAllNotes,
+} = require("../Controllers/Notes");
 
 // routers for get , post , put requests here .
 
-router.post("/", addNotes); // path is "/"
-router.get("/", getAllNotes); // path is "/"
-router.delete("/:id", deleteNotesById); // path is "/"
-router.delete("/", deleteAllNotes);
+router.post("/", auth, addNotes); // path is "/"
+router.get("/", auth, getAllNotes); // path is "/"
+router.delete("/:id", auth, deleteNotesById); // path is "/"
+router.delete("/", auth, deleteAllNotes);
 
 module.exports = router;

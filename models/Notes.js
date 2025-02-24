@@ -4,13 +4,17 @@ const mongoose = require("mongoose");
 const date = new Date().toLocaleTimeString();
 
 const notesSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
   },
   timeStamp: {
     type: String,
-    default:date
+    default: date,
   },
   description: {
     type: String,

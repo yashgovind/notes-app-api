@@ -1,0 +1,22 @@
+meta {
+  name: Create New Note
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:7500/notes
+  body: json
+  auth: none
+}
+
+headers {
+  x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmNhMTYxZTE5MzQwNDE0YzIxMmEyMiIsIm5hbWUiOiJTcmloYXJpIiwiZW1haWwiOiJzcmloYXJpQHN1cGVyLmNvbSIsImlhdCI6MTc0MDQxNTY2OCwiZXhwIjoxNzQwNDE5MjY4fQ.crg1CvvjSHHHZQyhYGf7KPbUR88xNlbcJhKXob_pKs8
+}
+
+body:json {
+  {
+    "title": "Note 1",
+    "description": "My first note"
+  }
+}
